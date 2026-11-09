@@ -41,7 +41,7 @@ const profile: {
   role: "Developer",
   about:
     "Student at ¡Supérate! Hilasal. I have been studying for 3 years ICT, english and values. I am focused on innovation and development of finances and technology. Leadership, determination and Discipline. ",
-    
+
   photo: "/images/1787501913778.jpg", // e.g. "/images/profile.jpg"
   socials: [
     { label: "LinkedIn", href: "https://www.linkedin.com/in/danilo-granados-?utm_source=share_via&utm_content=profile&utm_medium=member_android" },
@@ -56,9 +56,9 @@ const technologies: Technology[] = [
   { name: "Supabase", color: "#3ecf8e" },
   { name: "PostgreSQL", color: "#3ecf8e" },
   { name: "GitHub", color: "#ffffff" },
-  { name: "Excel", color: "#1e9e55" },     
-  { name: "Canva", color: "#6fd3f5" },    
-  { name: "Power BI", color: "#d4a50a" },  
+  { name: "Excel", color: "#1e9e55" },
+  { name: "Canva", color: "#6fd3f5" },
+  { name: "Power BI", color: "#d4a50a" },
 ];
 
 // Colors for the technology chips shown inside each project card
@@ -161,9 +161,16 @@ type ImageSlotProps = {
   alt: string;
   label: string;
   className?: string;
+  openInNewTab?: boolean;
 };
 
-function ImageSlot({ src, alt, label, className = "" }: ImageSlotProps) {
+function ImageSlot({
+  src,
+  alt,
+  label,
+  className = "",
+  openInNewTab = false,
+}: ImageSlotProps) {
   if (!src) {
     return (
       <div
@@ -175,9 +182,24 @@ function ImageSlot({ src, alt, label, className = "" }: ImageSlotProps) {
       </div>
     );
   }
-  return (
+
+  const img = (
     // eslint-disable-next-line @next/next/no-img-element
     <img src={src} alt={alt} className={`pf-image ${className}`} loading="lazy" />
+  );
+
+  if (!openInNewTab) return img;
+
+  return (
+    <a
+      href={src}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="pf-image-link"
+      aria-label={`${alt} (opens in a new tab)`}
+    >
+      {img}
+    </a>
   );
 }
 
@@ -228,11 +250,9 @@ export default function Portfolio() {
                 <HighlightedText
                   text={profile.about}
                   highlights={aboutHighlights}
-              />
+                />
               </p>
-               <p className="pt-4">
-                Technologies that I use:
-              </p>
+              <p className="pt-4">Technologies that I use:</p>
               <ul className="pf-techs" aria-label="Technologies">
                 {technologies.map((tech) => (
                   <li
@@ -326,6 +346,7 @@ export default function Portfolio() {
                     alt={`Certificate: ${c.name}`}
                     label="Certificate image"
                     className="pf-cert-image"
+                    openInNewTab
                   />
                   <figcaption>{c.name}</figcaption>
                 </figure>

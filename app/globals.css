@@ -729,3 +729,8 @@ body {
   font-size: 0.82rem;
   line-height: 1.65;
 }
+
+.pf-page .pf-image-link {
+  display: block;
+  cursor: zoom-in;
+}
